@@ -1,24 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import ReactPlayer from 'react-player'
 
 function App() {
+
+  const [playing, setPlaying] = useState(false)
+  const [played, setPlayed] = useState(0)
+  const [player, setPlayer] = useState()
+
+
+  const handleSeekMouseDown = e => {
+    //this.setState({ seeking: true })
+  }
+
+  const handleSeekChange = e => {
+    setPlayed(parseFloat(e.target.value))
+  }
+
+  const handleSeekMouseUp = e => {
+    //this.setState({ seeking: false })
+    player.seekTo(parseFloat(e.target.value))
+  }
+
+  const handlePlayPause = () => {
+    setPlaying(!playing)
+  }
+
+  const ref = x => {
+    setPlayer(x)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ReactPlayer 
+        ref = {ref}
+        url='./assets/test.mp4' 
+        playing = {playing}
+         />
+
+      <button onClick={handlePlayPause}>{playing ? 'Pause' : 'Play'}</button>
+
+      <input
+        type='range' min={0} max={1} step={0.083333}
+        value={played}
+        onMouseDown={handleSeekMouseDown}
+        onChange={handleSeekChange}
+        onMouseUp={handleSeekMouseUp}
+      />
+
     </div>
   );
 }
