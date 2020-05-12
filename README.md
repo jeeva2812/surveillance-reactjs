@@ -1,5 +1,9 @@
 ### Add the video as test.mp4 in assets folder
 
+## Todo
+
+- [ ] Scrolling on the slider to change the markings.
+
 <br /><br /><br /><br />
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
