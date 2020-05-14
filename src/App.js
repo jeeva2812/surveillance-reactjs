@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
 
-import Slider from '@material-ui/core/Slider';
-import IconButton from '@material-ui/core/IconButton';
+import { Slider, IconButton, InputLabel, Select, MenuItem } from '@material-ui/core';
+//import IconButton from '@material-ui/core/IconButton';
 
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
@@ -12,13 +12,20 @@ function App() {
   const [playing, setPlaying] = useState(false);
   const [played, setPlayed] = useState(0);
   const [player, setPlayer] = useState();
+  const [step, setStep] = useState(5);
+
+  const menuItems = [];
+
+  for(let i=4;i<=10;i++){
+    menuItems.push(<MenuItem value = {i}> {i} minutes </MenuItem>);
+  }
 
   const marks = [];
 
-  for(let i=1;i<=12;i++){
+  for(let i=1;i<=(60/step);i++){
     let x = {
-      value: i*60*5,
-      label: `${i*5} minutes` 
+      value: i*60*step,
+      label: `${i*step} minutes` 
     };
     marks.push(x);
   }
@@ -53,7 +60,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div style = {{margin: 20}}>
       <ReactPlayer 
         ref = {ref}
         url= './assets/test.mp4'
@@ -73,6 +80,14 @@ function App() {
         valueLabelFormat = {getTime}
         marks = {marks}
       />
+
+      <InputLabel> Steps </InputLabel>
+      <Select
+        value = {step}
+        onChange = {e => {setStep(e.target.value)}} >
+          {menuItems}
+      </Select>
+
 
     </div>
   );
